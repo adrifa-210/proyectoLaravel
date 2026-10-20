@@ -15,6 +15,7 @@
             <div class="alert alert-danger" role="alert">
                 {{$message}}
                  </div>
+                 @enderror
             </div>
                 </div>
                 <div class="mb-3">
@@ -26,6 +27,7 @@
             <div class="alert alert-danger" role="alert">
                 {{$message}}
                  </div>
+                 @enderror
             </div>
                 </div>
                 <div class="mb-3">
@@ -37,6 +39,7 @@
             <div class="alert alert-danger" role="alert">
                 {{$message}}
                  </div>
+                 @enderror
                 </div>
                 <div class="mb-3">
                     <label for="genero" class="form-label">Género</label>
@@ -59,6 +62,7 @@
             <div class="alert alert-danger" role="alert">
                 {{$message}}
                  </div>
+                 @enderror
                 </div>
                 <div class="mb-3">
                     <label for="notaacceso" class="form-label">Nota de acceso</label>
@@ -69,6 +73,7 @@
             <div class="alert alert-danger" role="alert">
                 {{$message}}
                  </div>
+                 @enderror
                 </div>
                 <button type="submit" class="btn btn-secondary">
                     Crear alumno
