@@ -5,6 +5,7 @@ use Illuminate\Database\UniqueConstraintViolationException;
 use App\Models\Alumno;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
 class AlumnoController extends Controller
@@ -38,6 +39,39 @@ class AlumnoController extends Controller
     }
 
     function store(Request $request): RedirectResponse{
+        //1º Validar
+        $rules =  [
+            'nombre' => 'required|string|max:100|min:2',
+            'apellido' => 'required|string|max:130|min:100',
+            'fnac' => 'nullable|date|before_or_equal:today',
+            'genero' => 'nullable|in:masculino,femenino,otro',
+            'notaacceso'=> 'nullable|numeric|gte:0|lte:10|decimal:2',
+        ];
+        $messages = [
+            'nombre.required' => '',
+            'nombre.string' => '',
+            'nombre.max' => '',
+            'nombre.min' => '',
+            'apellido.required' => '',
+            'apellido.string' => '',
+            'apellido.max' => '',
+            'apellido.min' => '',
+            'fnac.date' => '',
+            'fnac.before_or_equal' => '',
+            'genero.in' => '',
+            'notaacceso.numeric' => '',
+            'notaacceso.gte' => '',
+            'notaacceso.lte' => '',
+            'notaacceso.decimal' => '',
+
+
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if($validator->fails()){
+             return back()->withInput()->withErrors($validator);
+        }
+
         $alumno = new Alumno($request->all());
         try{
         $alumno->save();

@@ -9,16 +9,34 @@
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
                     <input type="text" class="form-control" value="{{old('nombre')}}" id="nombre" name="nombre" required maxlength="100" placeholder="Introduce el nombre del alumno">
+                     @error('nombre')
+            <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="alert alert-danger" role="alert">
+                {{$message}}
+                 </div>
             </div>
                 </div>
                 <div class="mb-3">
                     <label for="apellido" class="form-label">Apellidos</label>
                     <input type="text" class="form-control" value="{{old('apellido')}}" id="apellido" name="apellido" required maxlength="130" placeholder="Introduce los apellidos del alumno">
+                     @error('apellido')
+            <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="alert alert-danger" role="alert">
+                {{$message}}
+                 </div>
             </div>
                 </div>
                 <div class="mb-3">
                     <label for="fnac" class="form-label">Fecha de nacimiento</label>
                     <input type="date" class="form-control" value="{{old('fnac')}}" id="fnac" name="fnac" max="{{now()->format('Y-m-d')}}">
+                     @error('fnac')
+            <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="alert alert-danger" role="alert">
+                {{$message}}
+                 </div>
                 </div>
                 <div class="mb-3">
                     <label for="genero" class="form-label">Género</label>
@@ -35,10 +53,22 @@
         <option value="otro" @selected(old('genero') == 'otro')>Otro
         </option>
                     </select>
+                     @error('genero')
+            <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="alert alert-danger" role="alert">
+                {{$message}}
+                 </div>
                 </div>
                 <div class="mb-3">
                     <label for="notaacceso" class="form-label">Nota de acceso</label>
                     <input type="number" value="{{old('notaacceso')}}" class="form-control" id="notaacceso" name="notaacceso" min="0" max="10" step="0.01" placeholder="Introduce la nota de acceso">
+                     @error('notaacceso')
+            <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="alert alert-danger" role="alert">
+                {{$message}}
+                 </div>
                 </div>
                 <button type="submit" class="btn btn-secondary">
                     Crear alumno
