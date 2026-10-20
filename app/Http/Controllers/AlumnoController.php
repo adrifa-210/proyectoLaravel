@@ -42,7 +42,11 @@ class AlumnoController extends Controller
         try{
         $alumno->save();
         } catch(UniqueConstraintViolationException $e) {
-            return back()->withInput()->withErrors(['claveunica' => 'Clave unica duplicada.']);
+            return back()->withInput()->withErrors([
+                'error' => 'Nombre y apellidos ya existentes.',
+                //'nombre' => 'Este campo forma parte de la clave unica',
+                //'apellido' => 'Este campo forma parte de la clave unica'
+            ]);
         } catch(\Exception $e){
             echo 'global';
             dd($e);
