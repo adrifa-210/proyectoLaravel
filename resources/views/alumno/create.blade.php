@@ -4,6 +4,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 mx-auto">
+            @error('claveunica')
+            <div class="alert alert-danger" role="alert">
+                {{$message}}
+            </div>
+            @enderror
             <form action="{{ route('alumno.store') }}" method="post">
                 @csrf
                 <div class="mb-3">
