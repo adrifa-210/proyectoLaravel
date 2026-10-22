@@ -15,7 +15,7 @@ class StoreAlumnoTest extends TestCase
             'nombre' => 'Antonio',
             'apellido' => 'Alba',
             'fnac' => '2000-01-01',
-            'genero' => 'hombre',
+            'genero' => 'masculino',
             'notaacceso' => '4.00',
         ]);
 
@@ -24,7 +24,7 @@ class StoreAlumnoTest extends TestCase
             'nombre' => 'Antonio',
             'apellido' => 'Alba',
             'fnac' => '2000-01-01',
-            'genero' => 'hombre',
+            'genero' => 'masculino',
             'notaacceso' => 4,
         ]);
 
