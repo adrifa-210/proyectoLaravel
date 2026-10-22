@@ -27,7 +27,7 @@
                     <h6 class="card-title">{{\Carbon\Carbon::parse($alumno->fnac)->locale('es')->translatedFormat('d/m/Y')}}</h6>
                     <h6 class="card-title">{{$alumno->genero}}</h6>
                     <h6 class="card-title">{{$alumno->notaacceso}}</h6>
-                    <a href="{{route('alumno.index')}}"class="btn btn-secondary">BACK</a>
+                    <a href="{{ route('alumno.index') }}" class="btn btn-secondary mt-3">Volver al listado</a>
                 </div>
             </div>
         </div>

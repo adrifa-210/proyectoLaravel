@@ -10,6 +10,32 @@ use Illuminate\View\View;
 
 class AlumnoController extends Controller
 {
+    private const RULES = [
+            'nombre' => 'required|string|max:100|min:2',
+            'apellido' => 'required|string|max:130|min:2',
+            'fnac' => 'nullable|date|before_or_equal:today',
+            'genero' => 'nullable|in:hombre,femenino,otro',
+            'notaacceso'=> 'nullable|numeric|gte:0|lte:10|decimal:0,2',
+        ];
+    
+    private const MESSAGES = [
+            'nombre.required' => 'Nombre requerido',
+            'nombre.string' => 'Nombre debe ser texto',
+            'nombre.max' => 'Nombre max 100 caracteres',
+            'nombre.min' => 'Nombre min 2 caracteres',
+            'apellido.required' => 'Apellido requerido',
+            'apellido.string' => 'Apellido debe ser texto',
+            'apellido.max' => 'Apellido max 130 caracteres',
+            'apellido.min' => 'Apellido min 100 caracteres',
+            'fnac.date' => 'Fecha invalida',
+            'fnac.before_or_equal' => 'Fecha mayor a hoy',
+            'genero.in' => 'Generos permitidos hombre, femenino u otro',
+            'notaacceso.numeric' => 'Nota acceso debe ser numero',
+            'notaacceso.gte' => 'Nota acceso minimo 0',
+            'notaacceso.lte' => 'Nota acceso maximo 10',
+            'notaacceso.decimal' => 'Nota acceso con 2 decimales',
+        ];
+
     public function create(): View
     {
         //
@@ -18,7 +44,24 @@ class AlumnoController extends Controller
 
     public function destroy(Alumno $alumno): RedirectResponse
     {
-        dd(['destroy', $alumno]);
+        try{
+        $alumno->delete();
+        } catch(QueryException $e) {
+            if ($e->getCode() == 23503){
+                return back()->withInput()->withErrors([
+                    'error' => 'Error al eliminar el alumno. Posiblemente este asociado a otro registro.',
+                ]);
+            } else {
+                return back()->withInput()->withErrors([
+                    'error' => 'Error al eliminar el alumno. '.$e->getMessage(),
+                ]);
+            }
+
+        } catch(\Exception $e){
+            echo 'global';
+            dd($e);
+        }
+        return redirect()->route('alumno.index')->with(['success' => 'Alumno eliminado correctamente']);
     }
 
     public function edit(Alumno $alumno): View
@@ -26,6 +69,7 @@ class AlumnoController extends Controller
         //
         return view('alumno.edit', ['alumno'=>$alumno]);
     }
+
 
     public function index(): View
     {
@@ -40,33 +84,7 @@ class AlumnoController extends Controller
 
     function store(Request $request): RedirectResponse{
         //1º Validar
-        $rules =  [
-            'nombre' => 'required|string|max:100|min:2',
-            'apellido' => 'required|string|max:130|min:100',
-            'fnac' => 'nullable|date|before_or_equal:today',
-            'genero' => 'nullable|in:masculino,femenino,otro',
-            'notaacceso'=> 'nullable|numeric|gte:0|lte:10|decimal:2',
-        ];
-        $messages = [
-            'nombre.required' => '',
-            'nombre.string' => '',
-            'nombre.max' => '',
-            'nombre.min' => '',
-            'apellido.required' => '',
-            'apellido.string' => '',
-            'apellido.max' => '',
-            'apellido.min' => '',
-            'fnac.date' => '',
-            'fnac.before_or_equal' => '',
-            'genero.in' => '',
-            'notaacceso.numeric' => '',
-            'notaacceso.gte' => '',
-            'notaacceso.lte' => '',
-            'notaacceso.decimal' => '',
-
-
-        ];
-        $validator = Validator::make($request->all(), $rules, $messages);
+        $validator = Validator::make($request->all(), self::RULES, self::MESSAGES);
 
         if($validator->fails()){
              return back()->withInput()->withErrors($validator);
@@ -85,8 +103,10 @@ class AlumnoController extends Controller
             echo 'global';
             dd($e);
         }
+
+        session(['success' => 'Alumno creado correctamente']);
         
-        return redirect()->route('alumno.index');
+        return redirect()->route('alumno.create')->with(['success' => 'Alumno creado correctamente']);
     }
 
     /*
@@ -107,7 +127,23 @@ class AlumnoController extends Controller
 
     public function update(Request $request, Alumno $alumno): RedirectResponse
     {
-        $alumno -> update($request->all());
-        return redirect()->route('alumno.index');
+        $validator = Validator::make($request->all(), self::RULES, self::MESSAGES);
+
+        if($validator->fails()){
+             return back()->withInput()->withErrors($validator);
+        }
+
+        try{
+            $alumno -> update($request->all());
+        } catch(UniqueConstraintViolationException $e) {
+            return back()->withInput()->withErrors([
+                'error' => 'Nombre y apellidos ya existentes. Error de clave unica duplicada',
+            ]);
+        } catch(\Exception $e){
+            echo 'global';
+            dd($e);
+        }
+
+        return redirect()->route('alumno.edit', ['alumno' => $alumno])->with(['success' => 'Alumno modificado correctamente']);
     }
 }

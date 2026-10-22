@@ -56,6 +56,7 @@ class MainController extends Controller
     }*/
 
     function index(): View {
+        session()->forget('success');
         return view('index');
     }
 
