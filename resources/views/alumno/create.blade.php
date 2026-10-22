@@ -44,7 +44,7 @@
                         <option value="" @selected(old('genero') == '')>
                             Selecciona un género
                         </option>
-                        <option value="hombre" @selected(old('genero') == 'hombre')>
+                        <option value="masculino" @selected(old('genero') == 'masculino')>
                             Masculino
                         </option>
                         <option value="femenino" @selected(old('genero') == 'femenino')>

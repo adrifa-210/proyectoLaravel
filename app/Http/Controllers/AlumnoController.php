@@ -14,7 +14,7 @@ class AlumnoController extends Controller
             'nombre' => 'required|string|max:100|min:2',
             'apellido' => 'required|string|max:130|min:2',
             'fnac' => 'nullable|date|before_or_equal:today',
-            'genero' => 'nullable|in:hombre,femenino,otro',
+            'genero' => 'nullable|in:masculino,femenino,otro',
             'notaacceso'=> 'nullable|numeric|gte:0|lte:10|decimal:0,2',
         ];
     
@@ -29,7 +29,7 @@ class AlumnoController extends Controller
             'apellido.min' => 'Apellido min 100 caracteres',
             'fnac.date' => 'Fecha invalida',
             'fnac.before_or_equal' => 'Fecha mayor a hoy',
-            'genero.in' => 'Generos permitidos hombre, femenino u otro',
+            'genero.in' => 'Generos permitidos masculino, femenino u otro',
             'notaacceso.numeric' => 'Nota acceso debe ser numero',
             'notaacceso.gte' => 'Nota acceso minimo 0',
             'notaacceso.lte' => 'Nota acceso maximo 10',
@@ -92,7 +92,7 @@ class AlumnoController extends Controller
 
         $alumno = new Alumno($request->all());
         try{
-        $alumno->save();
+            $alumno->save();
         } catch(UniqueConstraintViolationException $e) {
             return back()->withInput()->withErrors([
                 'error' => 'Nombre y apellidos ya existentes.',
