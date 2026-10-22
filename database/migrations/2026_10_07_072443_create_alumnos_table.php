@@ -20,7 +20,7 @@ return new class extends Migration
             // fecha nacimiento
             $table->date('fnac')->nullable();
             // genero
-            $table->enum('genero', ['hombre', 'femenino', 'otro'])->nullable();
+            $table->enum('genero', ['masculino', 'femenino', 'otro'])->nullable();
             // nota acceso
             $table->decimal('notaacceso', 4, 2)->nullable();
             $table->timestamps();
