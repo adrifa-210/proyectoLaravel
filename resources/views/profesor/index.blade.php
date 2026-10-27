@@ -28,6 +28,7 @@
                         <th>Especialidad</th>
                         <th>Fecha Alta</th>
                         <th>Salario</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,15 +40,16 @@
                             <td>{{ $profesor->especialidad }}</td>
                             <td>{{ $profesor->fecha_alta ? \Carbon\Carbon::parse($profesor->fecha_alta)->locale('es')->translatedFormat('d/m/Y') : '-' }}</td>
                             <td>{{ $profesor->salario !== null ? number_format($profesor->salario, 2, ',', '.') . ' €' : '-' }}</td>
-
-                            <td><a href="{{ route('profesor.show', $profesor->id) }}" class="btn btn-secondary">View</a></td>
-                            <td><a href="{{ route('profesor.edit', $profesor->id) }}" class="btn btn-secondary">Edit</a></td>
-                            <td>
-                                <form class="confirm-dialog" data-message="{{ $profesor->apellidos . ' , ' . $profesor->nombre }}" action="{{ route('profesor.destroy', $profesor) }}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <input type="submit" value="Delete" class="btn btn-secondary">
-                                </form>
+                            <td class="text-center text-nowrap">
+                                <div class="d-inline-flex gap-1">
+                                    <a href="{{ route('profesor.show', $profesor->id) }}" class="btn btn-secondary" style="width: 75px;">View</a>
+                                    <a href="{{ route('profesor.edit', $profesor->id) }}" class="btn btn-secondary" style="width: 75px;">Edit</a>
+                                    <form class="confirm-dialog d-inline m-0" data-message="{{ $profesor->apellidos . ' , ' . $profesor->nombre }}" action="{{ route('profesor.destroy', $profesor) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <input type="submit" value="Delete" class="btn btn-secondary" style="width: 75px;">
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
