@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\MatriculaController;
 use App\Http\Controllers\ModuloController;
 use App\Http\Controllers\ProfesorController;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +13,7 @@ Route::get('array', [MainController::class, 'array'])->name('array');
 Route::get('a/r/r/a/y', [MainController::class, 'array'])->name('array');
 //Route::get('aboutRuta', [MainController::class, 'aboutMetodo'])->name('aboutNombre');
 Route::get('portfolio', [MainController::class, 'portfolio'])->name('portfolio');
+Route::get('gestion', [MainController::class, 'gestion'])->name('gestion');
 
 //las 7 rutas de alumno
 /*
@@ -38,3 +40,5 @@ Route::resource('profesor', ProfesorController::class);
 
 //las 7 rutas de modulo
 Route::resource('modulo', ModuloController::class);
+
+Route::resource('matricula', MatriculaController::class);
